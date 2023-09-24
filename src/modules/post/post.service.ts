@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { CreatePostDTO, Post, UpdatePostDTO } from '@papihack/dal-poc-library';
+import { Post, CreatePostDTO, UpdatePostDTO } from '@papihack/dal-poc-library';
 
 @Injectable()
 export class PostService {
@@ -11,8 +11,8 @@ export class PostService {
 
   async create(createPostDTO: CreatePostDTO) {
     const post = await this.postModel.create({
-        ...createPostDTO,
-        author: new Types.ObjectId(createPostDTO.author)
+      ...createPostDTO,
+      author: new Types.ObjectId(createPostDTO.author),
     });
     await post.populate('author');
     return post.toJSON();
